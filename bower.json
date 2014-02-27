@@ -1,0 +1,7 @@
+{
+    "name": "Wocky",
+    "dependencies": {
+        "ember": "=1.5.0-beta.2",
+        "ember-data": "=1.0.0-beta.7"
+    }
+}

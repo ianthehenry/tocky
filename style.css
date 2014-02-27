@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body, textarea {
+  font: 13px Menlo;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: #ff8;
+  flex-grow: 0;
+  height: 50px;
+}
+
+#main {
+  flex-grow: 1;
+  display: flex;
+}
+
+#rooms {
+  background-color:#f88;
+  width: 100px;
+}
+
+#rooms .room {
+  display: flex;
+  white-space: nowrap;
+}
+
+#rooms .room-name {
+  text-overflow: ellipsis;
+  background-color: #ff0;
+  overflow: hidden;
+  flex: 1;
+}
+
+#rooms .unread-count {
+  background-color: #88f;
+}
+
+#current-room {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#room-header {
+  height: 50px;
+  background-color: #0f0;
+}
+
+#room-content {
+  display: flex;
+  flex: 1;
+}
+
+#messages-container {
+  background-color:#8f8;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+#messages-list {
+  background-color: #8ff;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#message-input {
+  resize: none;
+}
+
+#message-input:focus {
+  outline: none;
+}
+
+#people {
+  width: 100px;
+  background-color:#88f;
+}
+
+footer {
+  flex-grow: 0;
+  height: 50px;
+  background-color: #f8f;
+}

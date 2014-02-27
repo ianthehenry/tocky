@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ember playground</title>
+    <!--<script type='text/javascript' id='lt_ws' src='http://localhost:53644/socket.io/lighttable/ws.js'></script>-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <script type="text/x-handlebars">
+
+      <header>
+        potentially unnecessary application header
+      </header>
+
+      <div id="main">
+          {{outlet}}
+      </div>
+
+      <footer>
+        definitely unnecessary application footer
+      </footer>
+    </script>
+    <script type="text/x-handlebars" data-template-name="rooms">
+      <div id="rooms">
+        <div>
+          <div>Private Messages</div>
+          <div class="room"><span class="room-name">varys</span><span class="unread-count">0</span></div>
+          <div class="room"><span class="room-name">tyrion</span><span class="unread-count">0</span></div>
+        </div>
+        <div>
+          <div>Rooms</div>
+          <div class="room selected"><span class="room-name">Small Council</span><span class="unread-count">0</span></div>
+          <div class="room"><span class="room-name">tournaments</span><span class="unread-count">2</span></div>
+          <div class="room"><span class="room-name">kiwihouse</span><span class="unread-count">39</span></div>
+          <div class="room"><span class="room-name">a very long room name</span><span class="unread-count">19</span></div>
+          <div class="room"><span class="room-name">goldcloaks</span><span class="unread-count">0</span></div>
+        </div>
+      </div>
+      <div id="current-room">
+        {{outlet}}
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="rooms/index">
+      Girl get yoself a room over there
+    </script>
+    <script type="text/x-handlebars" data-template-name="room">
+      <div id="room-header">{{name}}</div>
+      <div id="room-content">
+        <div id="messages-container">
+          <div id="messages-list">
+            {{#each messages}}
+              <div class="message">{{text}}</div>
+            {{/each}}
+          </div>
+          <textarea id="message-input"></textarea>
+        </div>
+        {{outlet 'people'}}
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="people">
+      <div id="people">
+        <div class="active typing">varys</div>
+        <div class="active">stannis</div>
+        <div class="active">renly</div>
+        <div class="active">pycelle</div>
+        <div class="active">ned</div>
+        <div class="active">littlefinger</div>
+        <div class="active">selmy</div>
+        <div class="inactive">robert</div>
+      </div>
+    </script>
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
+    <script src="bower_components/ember/ember.js"></script>
+    <script src="bower_components/ember-data/ember-data.js"></script>
+    <script src="app.js"></script>
+    <script src="router.js"></script>
+    <script src="models.js"></script>
+  </body>
+</html>
