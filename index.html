@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Ember playground</title>
+    <title>Tocky</title>
     <!--<script type='text/javascript' id='lt_ws' src='http://localhost:53644/socket.io/lighttable/ws.js'></script>-->
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
@@ -42,7 +42,11 @@
         <div id="messages-container">
           <div id="messages-list">
             {{#each messages}}
-              <div class="message">{{text}}</div>
+              <div class="message">
+                <span class="sender">{{user}}</span>:
+                <span class="message">{{text}}</span>
+                <span class="time">{{time}}</span>
+              </div>
             {{/each}}
           </div>
           <textarea id="message-input"></textarea>

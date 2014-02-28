@@ -1,7 +1,7 @@
-window.Wocky = Ember.Application.create();
+window.Tocky = Ember.Application.create();
 
-Wocky.ApplicationView = Ember.View.extend({
+Tocky.ApplicationView = Ember.View.extend({
   elementId: 'body'
 });
 
-Wocky.ApplicationAdapter = DS.FixtureAdapter.extend();
+Tocky.ApplicationAdapter = DS.FixtureAdapter.extend();
