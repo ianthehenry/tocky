@@ -4,17 +4,16 @@
     <meta charset="utf-8" />
     <title>Ember playground</title>
     <!--<script type='text/javascript' id='lt_ws' src='http://localhost:53644/socket.io/lighttable/ws.js'></script>-->
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
     <script type="text/x-handlebars">
-
       <header>
         potentially unnecessary application header
       </header>
 
       <div id="main">
-          {{outlet}}
+        {{outlet}}
       </div>
 
       <footer>
@@ -23,19 +22,12 @@
     </script>
     <script type="text/x-handlebars" data-template-name="rooms">
       <div id="rooms">
-        <div>
-          <div>Private Messages</div>
-          <div class="room"><span class="room-name">varys</span><span class="unread-count">0</span></div>
-          <div class="room"><span class="room-name">tyrion</span><span class="unread-count">0</span></div>
-        </div>
-        <div>
-          <div>Rooms</div>
-          <div class="room selected"><span class="room-name">Small Council</span><span class="unread-count">0</span></div>
-          <div class="room"><span class="room-name">tournaments</span><span class="unread-count">2</span></div>
-          <div class="room"><span class="room-name">kiwihouse</span><span class="unread-count">39</span></div>
-          <div class="room"><span class="room-name">a very long room name</span><span class="unread-count">19</span></div>
-          <div class="room"><span class="room-name">goldcloaks</span><span class="unread-count">0</span></div>
-        </div>
+        {{#each}}
+          {{#link-to 'room' . class="room"}}
+            <span class="room-name">{{name}}</span>
+            <span class="unread-count">0</span>
+          {{/link-to}}
+        {{/each}}
       </div>
       <div id="current-room">
         {{outlet}}

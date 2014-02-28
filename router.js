@@ -4,3 +4,8 @@ Wocky.Router.map(function() {
   });
 });
 
+Wocky.RoomsRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('room');
+  }
+});
