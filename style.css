@@ -4,7 +4,7 @@
 }
 
 body, textarea {
-  font: 13px Menlo;
+  font-family: sans-serif;
 }
 
 html, body {
@@ -78,6 +78,11 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  overflow-y: scroll;
+}
+
+#messages-list > .message {
+  flex-shrink: 0;
 }
 
 #message-input {

@@ -40,30 +40,30 @@
       <div id="room-header">{{name}}</div>
       <div id="room-content">
         <div id="messages-container">
-          <div id="messages-list">
-            {{#each messages}}
-              <div class="message">
-                <span class="sender">{{user}}</span>:
-                <span class="message">{{text}}</span>
-                <span class="time">{{time}}</span>
-              </div>
-            {{/each}}
-          </div>
-          <textarea id="message-input"></textarea>
+          {{ render 'messages' messages }}
+          {{ smart-text id="message-input" value=nextMessageText enter-down="sendMessage" }}
         </div>
-        {{outlet 'people'}}
+        <div id="people">
+          <div class="active typing">varys</div>
+          <div class="active">stannis</div>
+          <div class="active">renly</div>
+          <div class="active">pycelle</div>
+          <div class="active">ned</div>
+          <div class="active">littlefinger</div>
+          <div class="active">selmy</div>
+          <div class="inactive">robert</div>
+        </div>
       </div>
     </script>
-    <script type="text/x-handlebars" data-template-name="people">
-      <div id="people">
-        <div class="active typing">varys</div>
-        <div class="active">stannis</div>
-        <div class="active">renly</div>
-        <div class="active">pycelle</div>
-        <div class="active">ned</div>
-        <div class="active">littlefinger</div>
-        <div class="active">selmy</div>
-        <div class="inactive">robert</div>
+    <script type="text/x-handlebars" data-template-name="messages">
+      <div id="messages-list">
+        {{#each}}
+          <div class="message">
+            <span class="sender">{{user}}</span>:
+            <span class="message">{{text}}</span>
+            <span class="time">{{time}}</span>
+          </div>
+        {{/each}}
       </div>
     </script>
     <script src="bower_components/jquery/jquery.js"></script>
