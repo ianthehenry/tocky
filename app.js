@@ -1,3 +1,8 @@
+var gui = require('nw.gui');
+var win = gui.Window.get();
+
+document.cookie = "chat.sessions=s%3Aj%3A%7B%7D.%2BShmKj0o2LB6DTbltC3MJEmnnoQOXWjYMX0%2BS2T2ZTA;";
+
 window.Tocky = Ember.Application.create();
 
 Tocky.ApplicationView = Ember.View.extend({
@@ -15,7 +20,7 @@ Tocky.RoomController = Ember.ObjectController.extend({
 
       var message = this.store.createRecord('message', {
         user: 'me',
-        text: text,
+        content: text,
         time: new Date(),
         isUnread: false,
         room: this.get('model')
@@ -37,20 +42,62 @@ Tocky.SmartTextComponent = Ember.TextArea.extend({
   }
 });
 
-Tocky.ApplicationAdapter = DS.RESTAdapter.extend({
-  host: 'localhost:3000'
+var TockyAdapter = DS.RESTAdapter.extend({
+  host: 'http://localhost:3000'
 });
 
-
-$.ajax({
-  type: 'POST',
-  url: 'http://localhost:3000/sessions/auth',
-  data: {email:'user@user.user', password: 'user' },
-  success: function(body, uselessBullshit, xhr) {
-    console.log(xhr);
-    debugger
-  },
-  error: function() {
-    console.error(arguments);
+Tocky.ApplicationAdapter = TockyAdapter;
+Tocky.MessageAdapter = TockyAdapter.extend({
+  createRecord: function(store, type, record) {
+    var serializer = store.serializerFor(type.typeKey);
+    var data = serializer.serialize(record, { includeId: true });
+    var url = [this.urlPrefix(), 'rooms', record.get('room.id'), 'messages'].join('/');
+    return this.ajax(url, "POST", { data: data });
   }
 });
+
+$(window).on('keydown', function(e) {
+  if (e.which == 82 && e.metaKey) {
+    gui.App.clearCache();
+    win.reloadIgnoringCache();
+  }
+})
+
+// RegExp.quote = function(str) {
+//   return str.replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
+// }
+
+// var getCookie = function(cookieName, res) {
+//   var cookies = res.headers['set-cookie'];
+//   var regex = new RegExp(RegExp.quote(cookieName) + "=([^;]+)(&|;)");
+//   var result = null;
+//   for (var i = 0; i < cookies.length; i++) {
+//     match = regex.exec(cookies[i])
+//     if (match != null) {
+//       return match[1];
+//     }
+//   }
+//   return null;
+// }
+
+// var http = require('http');
+// var req = http.request({
+//   hostname: 'localhost',
+//   port: 3000,
+//   method: 'POST',
+//   path: '/sessions/auth',
+//   headers: {
+//     'X-Whatever': 'cool',
+//     'Origin': 'localhost'
+//   }
+// }, function(res) {
+//   var chatSession = getCookie('chat.session', res)
+//   document.cookie = "chat.sessions=" + chatSession;
+//   console.log("cookie = " + chatSession);
+// });
+
+// req.on('error', function(e) {
+//   console.log('problem with request: ' + e.message);
+//   debugger;
+// });
+// req.end();

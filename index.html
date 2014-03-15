@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <title>Tocky</title>
-    <!--<script type='text/javascript' id='lt_ws' src='http://localhost:53644/socket.io/lighttable/ws.js'></script>-->
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
@@ -60,7 +59,7 @@
         {{#each}}
           <div class="message">
             <span class="sender">{{user}}</span>:
-            <span class="message">{{text}}</span>
+            <span class="message">{{content}}</span>
             <span class="time">{{time}}</span>
           </div>
         {{/each}}
@@ -71,7 +70,7 @@
     <script src="bower_components/ember/ember.js"></script>
     <script src="bower_components/ember-data/ember-data.js"></script>
     <script src="app.js"></script>
-    <script src="router.js"></script>
     <script src="models.js"></script>
+    <script src="router.js"></script>
   </body>
 </html>

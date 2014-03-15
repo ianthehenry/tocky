@@ -1,5 +1,5 @@
 Tocky.Message = DS.Model.extend({
-  text: DS.attr('string'),
+  content: DS.attr('string'),
   isUnread: DS.attr('boolean'),
   room: DS.belongsTo('room'),
   time: DS.attr('date'),

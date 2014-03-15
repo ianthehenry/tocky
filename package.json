@@ -1,0 +1,17 @@
+{
+  "name": "Tocky",
+  "description": "A chat client",
+  "version": "0.0.1",
+  "main": "index.html",
+  "icon": "tocky.png",
+  "window": {
+    "width": 330,
+    "height": 500
+  },
+  "scripts": {
+    "start": "nodewebkit"
+  },
+  "devDependencies": {
+    "nodewebkit": "=0.8.5"
+  }
+}
