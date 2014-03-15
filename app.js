@@ -3,7 +3,11 @@ var win = gui.Window.get();
 
 document.cookie = "chat.sessions=s%3Aj%3A%7B%7D.%2BShmKj0o2LB6DTbltC3MJEmnnoQOXWjYMX0%2BS2T2ZTA;";
 
-window.Tocky = Ember.Application.create();
+window.Tocky = Ember.Application.create({
+  LOG_TRANSITIONS: true,
+  LOG_VIEW_LOOKUPS: true,
+  LOG_ACTIVE_GENERATION: true
+});
 
 Tocky.ApplicationView = Ember.View.extend({
   elementId: 'body'
