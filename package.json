@@ -2,16 +2,21 @@
   "name": "Tocky",
   "description": "A chat client",
   "version": "0.0.1",
-  "main": "index.html",
+  "main": "http://localhost:4200/index.html",
   "icon": "tocky.png",
   "window": {
-    "width": 330,
+    "width": 660,
     "height": 500
   },
+  "node-remote": "localhost:4200",
   "scripts": {
     "start": "nodewebkit"
   },
   "devDependencies": {
-    "nodewebkit": "=0.8.5"
+    "nodewebkit": "=0.8.5",
+    "broccoli": "^0.4.1",
+    "broccoli-coffee": "^0.1.0",
+    "broccoli-static-compiler": "^0.1.2",
+    "broccoli-stylus": "^0.1.1"
   }
 }
