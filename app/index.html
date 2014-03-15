@@ -42,15 +42,10 @@
           {{ render 'messages' messages }}
           {{ smart-text id="message-input" value=nextMessageText enter-down="sendMessage" }}
         </div>
-        <div id="people">
-          <div class="active typing">varys</div>
-          <div class="active">stannis</div>
-          <div class="active">renly</div>
-          <div class="active">pycelle</div>
-          <div class="active">ned</div>
-          <div class="active">littlefinger</div>
-          <div class="active">selmy</div>
-          <div class="inactive">robert</div>
+        <div id="users">
+          {{#each users}}
+            <div>{{name}}</div>
+          {{/each}}
         </div>
       </div>
     </script>
@@ -71,7 +66,10 @@
     <script src="ember.js"></script>
     <script src="ember-data.js"></script>
     <script src="app.js"></script>
+    <script src="controllers.js"></script>
+    <script src="views.js"></script>
     <script src="models.js"></script>
+    <script src="internets.js"></script>
     <script src="router.js"></script>
   </body>
 </html>

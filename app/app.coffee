@@ -13,57 +13,6 @@ window.Tocky = Ember.Application.create
   LOG_ACTIVE_GENERATION: true
   LOG_MODULE_RESOLVER: true
 
-Tocky.ApplicationView = Ember.View.extend
-  elementId: 'body'
-
-Tocky.RoomController = Ember.ObjectController.extend
-  actions:
-    sendMessage: ->
-      text = @get('nextMessageText')
-      @set('nextMessageText', "")
-      if text.trim().length == 0
-        return
-
-      message = @store.createRecord 'message',
-        content: text
-        time: new Date()
-        isUnread: false
-        room: @get('model')
-      message.save()
-
-Tocky.MessagesController = Ember.ArrayController.extend
-  needs: ['room']
-  itemController: 'message'
-
-Tocky.MessageController = Ember.ObjectController.extend
-  text: util.prop 'model.content', -> @get('model.content')
-
-Tocky.SmartTextComponent = Ember.TextArea.extend
-  becomeFocused: util.on 'didInsertElement', ->
-    @$().focus()
-  keyDown: (e) ->
-    if e.which == 13 and not e.shiftKey
-      @sendAction('enter-down')
-      e.preventDefault()
-
-TockyAdapter = DS.RESTAdapter.extend
-  host: 'http://localhost:3000'
-
-Tocky.ApplicationAdapter = TockyAdapter
-Tocky.MessageAdapter = TockyAdapter.extend
-  createRecord: (store, type, record) ->
-    serializer = store.serializerFor(type.typeKey)
-    data = serializer.serialize record, { includeId: true }
-    url = [@urlPrefix(), 'rooms', record.get('room.id'), 'messages'].join('/')
-    return @ajax url, 'POST', { data }
-
-Tocky.MessageSerializer = DS.RESTSerializer.extend
-  normalizePayload: (type, payload) ->
-    payload.users = [payload.message.user]
-    payload.message.user = payload.message.user.id
-    payload
-
-
 # RegExp.quote = (str) -> str.replace /[.?*+^$[\]\\(){}|-]/g, '\\$&'
 
 # getCookie = (cookieName, res) ->

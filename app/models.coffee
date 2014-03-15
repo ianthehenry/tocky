@@ -8,6 +8,7 @@ Tocky.Message = DS.Model.extend
 Tocky.Room = DS.Model.extend
   name: DS.attr('string')
   messages: DS.hasMany('message')
+  users: DS.hasMany('user', { async: true })
 
 Tocky.User = DS.Model.extend
   name: DS.attr('string')
