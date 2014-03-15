@@ -59,7 +59,7 @@ Tocky.MessageAdapter = TockyAdapter.extend
 
 Tocky.MessageSerializer = DS.RESTSerializer.extend
   normalizePayload: (type, payload) ->
-    payload.user = payload.message.user
+    payload.users = [payload.message.user]
     payload.message.user = payload.message.user.id
     payload
 
