@@ -5,7 +5,7 @@ module.exports = function (broccoli) {
 
   var dependencies = new broccoli.MergedTree(broccoli.bowerTrees());
   var scripts = coffee(broccoli.makeTree('app'), { bare: true });
-  var styles = stylus(broccoli.makeTree('styles'));
+  var styles = stylus(broccoli.makeTree('app/styles'));
 
   return [dependencies, scripts, styles];
 }
