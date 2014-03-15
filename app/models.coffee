@@ -3,8 +3,12 @@ Tocky.Message = DS.Model.extend
   isUnread: DS.attr('boolean')
   room: DS.belongsTo('room')
   time: DS.attr('date')
-  user: DS.attr('string')
+  user: DS.belongsTo('user')
 
 Tocky.Room = DS.Model.extend
   name: DS.attr('string')
   messages: DS.hasMany('message')
+
+Tocky.User = DS.Model.extend
+  name: DS.attr('string')
+  email: DS.attr('string')

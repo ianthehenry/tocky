@@ -7,4 +7,3 @@ Tocky.Router.map ->
 Tocky.RoomsRoute = Ember.Route.extend
   model: ->
     @store.find('room')
-

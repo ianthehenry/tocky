@@ -3,7 +3,6 @@
   "description": "A chat client",
   "version": "0.0.1",
   "main": "http://localhost:4200/index.html",
-  "icon": "tocky.png",
   "window": {
     "width": 660,
     "height": 500
