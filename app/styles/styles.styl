@@ -15,11 +15,11 @@ html, body
 
 header
   background-color: #ff8
-  flex-grow: 0
+  flex: none
   height: 50px
 
 #main
-  flex-grow: 1
+  flex: auto
   display: flex
 
 #rooms
@@ -60,16 +60,18 @@ header
 
 #messages-list
   background-color: #8ff
-  flex-grow: 1
+  flex: auto
   display: flex
   flex-direction: column
-  justify-content: flex-end
+  // this it breaks scrolling, even though it's exactly what we want
+  // justify-content: flex-end
   overflow-y: scroll
 
   > .message
-    flex-shrink: 0
+    flex: none
 
 #message-input
+  flex: none
   resize: none
   &:focus
     outline: none
@@ -79,6 +81,6 @@ header
   background-color:#88f
 
 footer
-  flex-grow: 0
+  flex: none
   height: 50px
   background-color: #f8f
