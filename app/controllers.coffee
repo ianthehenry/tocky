@@ -1,3 +1,6 @@
+Tocky.ApplicationController = Ember.Controller.extend
+  savedTransition: null
+
 Tocky.RoomController = Ember.ObjectController.extend
   actions:
     sendMessage: ->
@@ -21,3 +24,7 @@ Tocky.MessagesController = Ember.ArrayController.extend
 
 Tocky.MessageController = Ember.ObjectController.extend
   text: util.prop 'model.content', -> @get('model.content')
+
+Tocky.LoginController = Ember.Controller.extend
+  email: "user@user.user"
+  password: "user"

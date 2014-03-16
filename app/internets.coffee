@@ -1,4 +1,4 @@
-TockyAdapter = DS.RESTAdapter.extend
+window.TockyAdapter = DS.RESTAdapter.extend
   host: 'http://localhost:3000'
 
 Tocky.ApplicationAdapter = TockyAdapter
@@ -28,6 +28,6 @@ Tocky.RoomSerializer = DS.RESTSerializer.extend
     for room in payload.rooms
       room.links =
         users: "/rooms/#{room.id}/usership"
-        messages: "/rooms/#{room.id}/messages"
+        messages: "/rooms/#{room.id}/messages?limit=30"
 
     @_super(arguments...)

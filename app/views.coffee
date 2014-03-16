@@ -1,4 +1,4 @@
-Tocky.ApplicationView = Ember.View.extend
+Tocky.AuthenticatedView = Ember.View.extend
   elementId: 'body'
 
 Tocky.SmartTextComponent = Ember.TextArea.extend
