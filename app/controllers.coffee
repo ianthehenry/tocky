@@ -18,13 +18,6 @@ Tocky.RoomController = Ember.ObjectController.extend
         messages.pushObject(message)
       message.save()
 
-Tocky.MessagesController = Ember.ArrayController.extend
-  needs: ['room']
-  itemController: 'message'
-
-Tocky.MessageController = Ember.ObjectController.extend
-  text: util.prop 'model.content', -> @get('model.content')
-
 Tocky.LoginController = Ember.Controller.extend
   email: "user@user.user"
   password: "user"
