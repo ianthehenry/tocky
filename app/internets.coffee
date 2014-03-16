@@ -10,7 +10,24 @@ Tocky.MessageAdapter = TockyAdapter.extend
     return @ajax url, 'POST', { data }
 
 Tocky.MessageSerializer = DS.RESTSerializer.extend
-  normalizePayload: (type, payload) ->
+  extractSingle: (store, type, payload, id, requestType) ->
     payload.users = [payload.message.user]
     payload.message.user = payload.message.user.id
-    payload
+    @_super(arguments...)
+  extractArray: (store, type, payload, id, requestType) ->
+    users = {}
+    for message in payload.messages
+      user = message.user
+      message.user = user.id
+      users[user.id] = user
+    payload.users = (user for id, user of users)
+    @_super(arguments...)
+
+Tocky.RoomSerializer = DS.RESTSerializer.extend
+  extractArray: (store, type, payload, id, requestType) ->
+    for room in payload.rooms
+      room.links =
+        users: "/rooms/#{room.id}/usership"
+        messages: "/rooms/#{room.id}/messages"
+
+    @_super(arguments...)

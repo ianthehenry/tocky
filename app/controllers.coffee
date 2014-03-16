@@ -11,6 +11,8 @@ Tocky.RoomController = Ember.ObjectController.extend
         time: new Date()
         isUnread: false
         room: @get('model')
+      @get('model.messages').then (messages) ->
+        messages.pushObject(message)
       message.save()
 
 Tocky.MessagesController = Ember.ArrayController.extend
