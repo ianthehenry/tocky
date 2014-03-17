@@ -1,5 +1,3 @@
-Tocky.ApplicationRoute = Ember.Route.extend()
-
 Tocky.Router.map ->
   @resource 'authenticated', { path: '/' }, ->
     @resource 'rooms', { path: '/rooms' }, ->

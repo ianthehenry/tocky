@@ -1,6 +1,20 @@
 Tocky.ApplicationController = Ember.Controller.extend
   savedTransition: null
 
+Tocky.AuthenticatedController = Ember.Controller.extend
+  init: ->
+    socket = io.connect 'http://localhost:3000'
+
+    socket.on 'connect', =>
+      console.log 'connected'
+    socket.on 'disconnect', =>
+      console.log "disconnected"
+    socket.on 'message', (message) =>
+      console.log "message #{message}"
+
+    @_super(arguments...)
+
+
 Tocky.RoomController = Ember.ObjectController.extend
   actions:
     sendMessage: ->
