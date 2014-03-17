@@ -15,7 +15,6 @@
     "nodewebkit": "=0.8.5",
     "broccoli": "^0.4.1",
     "broccoli-coffee": "^0.1.0",
-    "broccoli-static-compiler": "^0.1.2",
     "broccoli-stylus": "^0.1.1"
   }
 }

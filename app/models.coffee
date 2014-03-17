@@ -13,4 +13,5 @@ Tocky.Room = DS.Model.extend
 Tocky.User = DS.Model.extend
   name: DS.attr 'string'
   email: DS.attr 'string'
+  hash: DS.attr 'string'
   rooms: DS.hasMany 'room', async: true, inverse: 'users'

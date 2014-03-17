@@ -14,3 +14,11 @@ Tocky.SmartTextComponent = Ember.TextArea.extend
     if e.which == 13 and not e.shiftKey
       @sendAction('enter-down')
       e.preventDefault()
+
+
+Tocky.InlineUserComponent = Ember.Component.extend
+  tagName: 'span'
+  classNames: ['user']
+  gravatarUrl: util.prop 'user.hash', ->
+    hash = @get('user').get('hash')
+    "https://secure.gravatar.com/avatar/#{hash}?s=20&d=mm"

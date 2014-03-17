@@ -8,7 +8,8 @@
   <body>
     <script type="text/x-handlebars" data-template-name="authenticated">
       <header>
-        Girl, you logged in as {{name}}
+        Girl, you logged in as {{inline-user user=.}}
+
         <button {{action "logout"}}>log out</button>
       </header>
 
@@ -50,7 +51,7 @@
       <div id="messages-list">
         {{#each}}
           <div class="message">
-            <span class="sender">{{user.name}}</span>:
+            {{inline-user user=user}}:
             <span class="message">{{content}}</span>
             <span class="time">{{time}}</span>
           </div>
@@ -62,6 +63,9 @@
       {{input type="password" value=password}}
       <button {{action "login"}}>Tell the internet</button>
     </script>
+    <script type="text/x-handlebars" id="components/inline-user"><!--
+      --><img height="20px" width="20px" {{bind-attr src=gravatarUrl}} />{{user.name}}<!--
+    --></script>
     <script src="util.js"></script>
     <script src="jquery.js"></script>
     <script src="handlebars.js"></script>
