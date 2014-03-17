@@ -1,7 +1,7 @@
 Tocky.ApplicationController = Ember.Controller.extend
   savedTransition: null
 
-Tocky.AuthenticatedController = Ember.Controller.extend
+Tocky.AuthenticatedController = Ember.ObjectController.extend
   init: ->
     socket = io.connect 'http://localhost:3000'
 
