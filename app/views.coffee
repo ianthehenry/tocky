@@ -4,6 +4,11 @@ Tocky.AuthenticatedView = Ember.View.extend
 Tocky.SmartTextComponent = Ember.TextArea.extend
   becomeFocused: util.on 'didInsertElement', ->
     @$().focus()
+  preventBlur: util.on 'focusOut', (e) ->
+    # sue me
+    setTimeout (=> @$().focus()), 0
+
+
   keyDown: (e) ->
     if e.which == 13 and not e.shiftKey
       @sendAction('enter-down')
