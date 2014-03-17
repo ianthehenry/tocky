@@ -5,8 +5,9 @@ Tocky.SmartTextComponent = Ember.TextArea.extend
   becomeFocused: util.on 'didInsertElement', ->
     @$().focus()
   preventBlur: util.on 'focusOut', (e) ->
-    # sue me
-    setTimeout (=> @$().focus()), 0
+    unless @get('isDestroying')
+      # sue me
+      setTimeout (=> @$().focus()), 0
 
 
   keyDown: (e) ->
