@@ -15,6 +15,12 @@ Tocky.MessageSerializer = DS.RESTSerializer.extend
     payload.message.user = payload.message.user.id
     @_super(arguments...)
   extractArray: (store, type, payload, id, requestType) ->
+    # There's currently a bug in the server
+    # where loading a room with no messages
+    # will send us a malformed response.
+    if Ember.isArray(payload)
+      payload = {messages: payload}
+
     users = {}
     for message in payload.messages
       user = message.user
