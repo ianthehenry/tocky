@@ -5,9 +5,9 @@ Tocky.ApplicationAdapter = TockyAdapter
 Tocky.MessageAdapter = TockyAdapter.extend
   createRecord: (store, type, record) ->
     serializer = store.serializerFor(type.typeKey)
-    data = serializer.serialize record, { includeId: true }
+    data = serializer.serialize record, {includeId: true}
     url = [@urlPrefix(), 'rooms', record.get('room.id'), 'messages'].join('/')
-    return @ajax url, 'POST', { data }
+    return @ajax url, 'POST', {data}
 
 Tocky.MessageSerializer = DS.RESTSerializer.extend
   extractSingle: (store, type, payload, id, requestType) ->
@@ -30,10 +30,8 @@ Tocky.MessageSerializer = DS.RESTSerializer.extend
     @_super(arguments...)
 
 Tocky.RoomSerializer = DS.RESTSerializer.extend
-  extractArray: (store, type, payload, id, requestType) ->
-    for room in payload.rooms
-      room.links =
-        users: "/rooms/#{room.id}/usership"
-        messages: "/rooms/#{room.id}/messages?limit=30"
-
+  normalize: (type, room, prop) ->
+    room.links =
+      users: "/rooms/#{room.id}/usership"
+      messages: "/rooms/#{room.id}/messages?limit=30"
     @_super(arguments...)

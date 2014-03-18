@@ -5,10 +5,6 @@ Tocky.Router.map ->
 
   @resource 'login'
 
-Tocky.RoomsRoute = Ember.Route.extend
-  model: ->
-    @store.find 'room'
-
 Tocky.AuthenticatedRoute = Ember.Route.extend
   beforeModel: (transition) ->
     applicationController = @controllerFor('application')
@@ -27,6 +23,9 @@ Tocky.AuthenticatedRoute = Ember.Route.extend
       delete localStorage.session_id
       delete localStorage.user_id
       @transitionTo '/login'
+
+Tocky.RoomsRoute = Ember.Route.extend
+  model: -> @modelFor('authenticated').get('rooms')
 
 Tocky.LoginRoute = Ember.Route.extend
   actions:

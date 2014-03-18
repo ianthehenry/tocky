@@ -8,7 +8,7 @@
   <body>
     <script type="text/x-handlebars" data-template-name="authenticated">
       <header>
-        Girl, you logged in as {{inline-user user=.}}
+        Girl, you logged in as {{inline-user user=.}} and sockets are {{socketState}}
 
         <button {{action "logout"}}>log out</button>
       </header>
