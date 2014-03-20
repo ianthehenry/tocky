@@ -1,0 +1,12 @@
+<div id="room-header">{{name}}</div>
+<div id="room-content">
+  <div id="messages-container">
+    {{render 'messages' messages}}
+    {{smart-text id="message-input" value=nextMessageText enter-down="sendMessage"}}
+  </div>
+  <div id="users">
+    {{#each users}}
+      <div>{{name}}</div>
+    {{/each}}
+  </div>
+</div>

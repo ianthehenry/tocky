@@ -1,0 +1,11 @@
+<div id="rooms">
+  {{#each}}
+    {{#link-to 'room' . class="room"}}
+      <span class="room-name">{{name}}</span>
+      <span class="unread-count">0</span>
+    {{/link-to}}
+  {{/each}}
+</div>
+<div id="current-room">
+  {{outlet}}
+</div>
