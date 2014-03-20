@@ -33,17 +33,17 @@ Tocky.LoginRoute = Ember.Route.extend
       $.ajax 'http://localhost:3000/sessions/auth',
         method: 'POST'
         data: @controllerFor('login').getProperties('email', 'password')
-        success: ({session: {id: session_id, user_id}}) =>
-          localStorage.session_id = session_id
-          localStorage.user_id = user_id
-          applicationController = @controllerFor('application')
-          transition = applicationController.get('savedTransition')
-          if transition
-            transition.retry()
-          else
-            @transitionTo '/rooms'
-        error: =>
-          alert "i'm sorry; something horrible has happened"
-          debugger
+      .then ({session: {id: session_id, user_id}}) =>
+        localStorage.session_id = session_id
+        localStorage.user_id = user_id
+        applicationController = @controllerFor('application')
+        transition = applicationController.get('savedTransition')
+        if transition
+          transition.retry()
+        else
+          @transitionTo '/rooms'
+      .fail =>
+        alert "i'm sorry; something horrible has happened"
+        debugger
       return
 
