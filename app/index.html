@@ -49,15 +49,12 @@
       </div>
     </script>
     <script type="text/x-handlebars" data-template-name="messages">
-      <div id="messages-list">
-        {{#each}}
-          <div class="message">
+      {{each itemViewClass="Tocky.MessageView"}}
+    </script>
+    <script type="text/x-handlebars" data-template-name="message">
             {{inline-user user=user}}:
             <span class="message">{{content}}</span>
             <span class="time">{{time}}</span>
-          </div>
-        {{/each}}
-      </div>
     </script>
     <script type="text/x-handlebars" data-template-name="login">
       {{input type="email" value=email}}
