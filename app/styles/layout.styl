@@ -1,0 +1,61 @@
+*
+  margin: 0
+  padding: 0
+
+html, body
+  height: 100%
+
+#body
+  height: 100%
+  display: flex
+  flex-direction: column
+
+header
+  flex: none
+  height: 50px
+
+#main
+  flex: auto
+  display: flex
+
+#rooms
+  width: 100px
+
+  .room
+    display: flex
+    white-space: nowrap
+
+  .room-name
+    text-overflow: ellipsis
+    overflow: hidden
+    flex: 1
+
+#current-room
+  flex: 1
+  display: flex
+  flex-direction: column
+
+#room-header
+  height: 50px
+
+#room-content
+  display: flex
+  flex: 1
+
+#messages-container
+  display: flex
+  flex: 1
+  flex-direction: column
+
+#messages-list
+  flex: auto
+  overflow-y: scroll
+
+#message-input
+  flex: none
+  resize: none
+  &:focus
+    outline: none
+
+#users
+  width: 100px
