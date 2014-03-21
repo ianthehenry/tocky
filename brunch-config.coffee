@@ -17,6 +17,7 @@ exports.config =
           'bower_components/handlebars/handlebars.js'
           'bower_components/ember/ember.js'
           'bower_components/ember-data/ember-data.js'
+          'app/util.coffee'
         ]
     templates:
         precompile: true
