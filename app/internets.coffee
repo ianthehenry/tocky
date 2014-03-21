@@ -11,7 +11,6 @@ Tocky.MessageAdapter = TockyAdapter.extend
 
 Tocky.MessageSerializer = DS.RESTSerializer.extend
   extractSingle: (store, type, payload, id, requestType) ->
-    payload.users = [payload.message.user]
     payload.message.user = payload.message.user.id
     @_super(arguments...)
   extractArray: (store, type, payload, id, requestType) ->
