@@ -16,6 +16,15 @@ header
 
 #messages-container
   background-color: #8f8
+  .message
+    &.quick .message-timestamp
+      visibility: hidden
+    &:not(.repeat-sender):not(:first-of-type)
+      border-top: solid 1px black
+    &.repeat-sender .message-sender
+      visibility: hidden
+    .message-content
+      background-color: #fff
 
 #messages-list
   background-color: #8ff

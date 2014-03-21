@@ -64,6 +64,32 @@ Tocky.RoomController = Ember.ObjectController.extend meMixin,
         messages.pushObject(message)
       message.save()
 
+Tocky.MessageController = Ember.ObjectController.extend
+  needs: ['messages']
+  htmlContent: util.prop 'model.content', ->
+    # TODO: obviously
+    @get('model.content')
+    .replace(/&/g, '&amp;')
+    .replace(/>/g, '&gt;')
+    .replace(/</g, '&lt;')
+  formatTime: (jsDate) ->
+    moment(jsDate).format('h:mm A')
+  time: util.prop 'model.time', ->
+    @formatTime(@get('model.time'))
+  isRepeatSender: util.getter ->
+    prevSender = @get('previousMessage.user')
+    currentSender = @get('model.user')
+    return prevSender == currentSender
+  isRepeatTime: util.getter ->
+    @formatTime(@get('model.time')) == @formatTime(@get('previousMessage.time'))
+  previousMessage: util.prop ->
+    # TODO: quadratic; doesn't update properly
+    index = @parentController.indexOf(@get('model'))
+    if index == 0
+      return null
+    else
+      return @parentController.objectAt(index - 1)
+
 Tocky.LoginController = Ember.Controller.extend
   email: "user@user.user"
   password: "user"

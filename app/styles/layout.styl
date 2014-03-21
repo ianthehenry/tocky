@@ -47,6 +47,20 @@ header
   flex: 1
   flex-direction: column
 
+  .message
+    display: flex
+    .message-sender
+      .inline-user
+        float: right
+      width: 100px
+      white-space: nowrap
+      overflow: hidden
+      flex: none
+    .message-content
+      flex: auto
+    .message-timestamp
+      flex-shrink: 0
+
 #messages-list
   flex: auto
   overflow-y: scroll

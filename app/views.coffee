@@ -48,14 +48,15 @@ Tocky.MessagesView = Ember.View.extend
     el.scrollTop = el.scrollHeight - el.clientHeight
 
 Tocky.MessageView = Ember.View.extend
-  className: 'message'
+  classNames: ['message']
+  classNameBindings: ['controller.isRepeatSender:repeat-sender', 'controller.isRepeatTime:quick']
   templateName: 'message'
   didInsertElement: ->
     @get('parentView').didInsertChild()
 
 Tocky.InlineUserComponent = Ember.Component.extend
   tagName: 'span'
-  classNames: ['user']
+  classNames: ['inline-user']
   gravatarUrl: util.prop 'user.hash', ->
     hash = @get('user').get('hash')
     "https://secure.gravatar.com/avatar/#{hash}?s=20&d=mm"
