@@ -18,6 +18,15 @@ Tocky.AuthenticatedRoute = Ember.Route.extend
       @transitionTo 'login'
   model: ->
     @store.find 'user', localStorage.user_id
+  afterModel: (model) ->
+    @set 'wocket', new Wocket('http://localhost:3000', @store, model)
+  setupController: (controller) ->
+    @_super(arguments...)
+    controller.set 'wocket', @get('wocket')
+  deactivate: ->
+    @get('wocket').destroy()
+    @_super(arguments...)
+
   actions:
     logout: ->
       delete localStorage.session_id
