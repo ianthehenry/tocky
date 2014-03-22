@@ -22,7 +22,7 @@ window.Wocket = Ember.Object.extend
   handlers:
     logOn: (roomDatas, state) ->
       rooms = @client.pushMany('room', roomDatas)
-      @me.get('rooms').pushObjects rooms
+      @me.get('rooms').addObjects rooms
       return
     chat: (messageData, roomData) ->
       # we will probably receive a chat message before the POST response

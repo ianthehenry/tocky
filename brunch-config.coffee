@@ -22,6 +22,7 @@ exports.config =
           'app/util.coffee'
           'app/ems.coffee'
           'app/models.coffee'
+          'app/sockets.coffee'
         ]
     templates:
         precompile: true
