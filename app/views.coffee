@@ -5,6 +5,7 @@ Tocky.SmartTextComponent = Ember.TextArea.extend
   becomeFocused: util.on 'didInsertElement', ->
     @$().focus()
   preventBlur: util.on 'focusOut', (e) ->
+    return
     # sue me
     setTimeout =>
       unless @get('isDestroying') or @get('isDestroyed')
@@ -49,7 +50,7 @@ Tocky.MessagesView = Ember.View.extend
 
 Tocky.MessageView = Ember.View.extend
   classNames: ['message']
-  classNameBindings: ['controller.isRepeatSender:repeat-sender', 'controller.isRepeatTime:quick']
+  classNameBindings: ['controller.quiet:quiet']
   templateName: 'message'
   didInsertElement: ->
     @get('parentView').didInsertChild()
@@ -57,6 +58,13 @@ Tocky.MessageView = Ember.View.extend
 Tocky.InlineUserComponent = Ember.Component.extend
   tagName: 'span'
   classNames: ['inline-user']
-  gravatarUrl: util.prop 'user.hash', ->
+
+Tocky.AvatarComponent = Ember.Component.extend
+  tagName: 'img'
+  size: 20
+  classNames: ['avatar']
+  attributeBindings: ['url:src', 'size:width', 'size:height']
+  url: util.prop 'user.hash', 'size', ->
     hash = @get('user').get('hash')
-    "https://secure.gravatar.com/avatar/#{hash}?s=20&d=mm"
+    size = @get('size')
+    "https://secure.gravatar.com/avatar/#{hash}?s=#{size}&d=mm"

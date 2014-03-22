@@ -4,6 +4,7 @@
 
 html, body
   height: 100%
+  -webkit-user-select: none
 
 #body
   height: 100%
@@ -36,7 +37,7 @@ header
   flex-direction: column
 
 #room-header
-  height: 50px
+  line-height: 40px
 
 #room-content
   display: flex
@@ -49,17 +50,17 @@ header
 
   .message
     display: flex
-    .message-sender
-      .inline-user
-        float: right
-      width: 100px
-      white-space: nowrap
-      overflow: hidden
+    > img
       flex: none
-    .message-content
+    > div
       flex: auto
+    .message-content
+      -webkit-user-select: text
+      .attribution
+        font-size: 0
     .message-timestamp
-      flex-shrink: 0
+      float: right
+      -webkit-user-select: none
 
 #messages-list
   flex: auto

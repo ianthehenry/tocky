@@ -2,32 +2,44 @@ body, textarea
   font-family: sans-serif
   font-size: 13pt
 
+dark-color = #383
+mid-color = #8f8
+light-color = #88f
+border-color = darken(mid-color, 50%)
+
+message-spacing = .25em
+
 header
-  background-color: #ff8
+  background-color: dark-color
 #rooms
-  background-color: #f88
+  background-color: red
   .room-name
     background-color: #ff0
   .unread-count
     background-color: #88f
 
 #room-header
-  background-color: #0f0
+  background-color: mid-color
+  border-bottom: solid 1px border-color
 
 #messages-container
-  background-color: #8f8
+  background-color: light-color
+  .message ~ .message
+    margin-top: message-spacing
   .message
-    &.quick .message-timestamp
-      visibility: hidden
-    &:not(.repeat-sender):not(:first-of-type)
-      border-top: solid 1px black
-    &.repeat-sender .message-sender
-      visibility: hidden
-    .message-content
-      background-color: #fff
+    .message-timestamp
+      color: #888
+    .sender-name
+      font-weight: bold
+    &.quiet
+      .avatar
+        visibility: hidden
+    &:not(.quiet):not(:first-of-type)
+      padding-top: message-spacing
+      border-top: solid 1px border-color
 
 #messages-list
-  background-color: #8ff
+  background-color: mid-color
 
 #users
-  background-color: #88f
+  background-color: dark-color

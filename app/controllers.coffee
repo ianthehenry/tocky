@@ -45,6 +45,7 @@ Tocky.MessageController = Ember.ObjectController.extend
     return prevSender == currentSender
   isRepeatTime: util.getter ->
     @formatTime(@get('model.time')) == @formatTime(@get('previousMessage.time'))
+  quiet: Ember.computed.and('isRepeatSender', 'isRepeatTime')
   previousMessage: util.prop ->
     # TODO: quadratic; doesn't update properly
     index = @parentController.indexOf(@get('model'))

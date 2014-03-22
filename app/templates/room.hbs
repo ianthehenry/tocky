@@ -6,7 +6,7 @@
   </div>
   <div id="users">
     {{#each users}}
-      <div>{{name}}</div>
+      {{inline-user user=. left=true}}
     {{/each}}
   </div>
 </div>
