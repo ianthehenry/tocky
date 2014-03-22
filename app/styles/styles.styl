@@ -24,16 +24,13 @@ header
 
 #messages-container
   background-color: light-color
-  .message ~ .message
-    margin-top: message-spacing
   .message
+    margin-top: message-spacing
+    padding: 0 message-spacing
+    .inline-user
+      font-weight: bold
     .message-timestamp
       color: #888
-    .sender-name
-      font-weight: bold
-    &.quiet
-      .avatar
-        visibility: hidden
     &:not(.quiet):not(:first-of-type)
       padding-top: message-spacing
       border-top: solid 1px border-color

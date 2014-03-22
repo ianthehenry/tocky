@@ -49,18 +49,14 @@ header
   flex-direction: column
 
   .message
-    display: flex
-    > img
-      flex: none
-    > div
-      flex: auto
     .message-content
       -webkit-user-select: text
       .attribution
         font-size: 0
+    .message-header
+      -webkit-user-select: none
     .message-timestamp
       float: right
-      -webkit-user-select: none
 
 #messages-list
   flex: auto

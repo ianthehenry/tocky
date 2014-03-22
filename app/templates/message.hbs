@@ -1,10 +1,7 @@
-{{-avatar user=user}}
-<div>
-  {{#unless quiet}}
-    <div class="message-header">
-      <div class="message-timestamp">{{time}}</div>
-      <span class="sender-name">{{user.name}}</span>
-    </div>
-  {{/unless}}
-  <div class="message-content"><span class="attribution">{{user.name}}: </span>{{{htmlContent}}}</div>
-</div>
+{{#unless quiet}}
+  <div class="message-header">
+    <div class="message-timestamp">{{time}}</div>
+    {{inline-user user=user left=true}}
+  </div>
+{{/unless}}
+<div class="message-content"><span class="attribution">{{user.name}}: </span>{{{htmlContent}}}</div>
