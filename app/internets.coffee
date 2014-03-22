@@ -1,36 +1,75 @@
-window.TockyAdapter = DS.RESTAdapter.extend
-  host: 'http://localhost:3000'
+pluralize = (typeName) -> typeName + 's'
+just = (obj) ->
+  new Ember.RSVP.Promise (resolve, reject) ->
+    resolve(obj)
+fail = (message) ->
+  new Ember.RSVP.Promise (resolve, reject) ->
+    reject(message)
 
-Tocky.ApplicationAdapter = TockyAdapter
-Tocky.MessageAdapter = TockyAdapter.extend
-  createRecord: (store, type, record) ->
-    serializer = store.serializerFor(type.typeKey)
-    data = serializer.serialize record, {includeId: true}
-    url = [@urlPrefix(), 'rooms', record.get('room.id'), 'messages'].join('/')
-    return @ajax url, 'POST', {data}
+assert = (val, message) ->
+  unless val
+    throw new Error(message)
 
-Tocky.MessageSerializer = DS.RESTSerializer.extend
-  extractSingle: (store, type, payload, id, requestType) ->
-    payload.message.user = payload.message.user.id
-    @_super(arguments...)
-  extractArray: (store, type, payload, id, requestType) ->
-    # There's currently a bug in the server
-    # where loading a room with no messages
-    # will send us a malformed response.
-    if Ember.isArray(payload)
-      payload = {messages: payload}
+normalizeMessagesPayload = (payload) ->
+  users = {}
+  for message in payload.messages
+    user = message.user
+    message.user = user.id
+    users[user.id] = user
+  payload.users = (user for id, user of users)
 
-    users = {}
-    for message in payload.messages
-      user = message.user
-      message.user = user.id
-      users[user.id] = user
-    payload.users = (user for id, user of users)
-    @_super(arguments...)
+window.TockyClient = Ember.Object.extend
+  headers: {}
+  init: ->
+    @store = new EMS.Store(TockySchema)
+  ajax: (method, urlComponents, params) ->
+    $.ajax ['http://localhost:3000'].concat(urlComponents).join('/'),
+      type: method
+      headers: @headers
+      data: params
 
-Tocky.RoomSerializer = DS.RESTSerializer.extend
-  normalize: (type, room, prop) ->
-    room.links =
-      users: "/rooms/#{room.id}/usership"
-      messages: "/rooms/#{room.id}/messages?limit=30"
-    @_super(arguments...)
+  get: ->
+    @ajax 'GET', arguments...
+  post: ->
+    @ajax 'POST', arguments...
+
+  find: (typeName, id, cached=false) ->
+    model = @store.find typeName, id
+    if model?
+      return just model
+    else if cached
+      return fail "#{typeName}##{id} is not cached"
+
+    @get [pluralize(typeName), id]
+    .then (payload) =>
+      @store.create typeName, payload[typeName]
+
+  pushMany: (typeName, datas) ->
+    for data in datas
+      @store.upsert typeName, data
+
+  loadMessages: (room) ->
+    @get ['rooms', room.get('id'), 'messages'], {limit: 30}
+    .then (payload) =>
+      normalizeMessagesPayload(payload)
+      @pushMany 'user', payload.users
+      messages = @pushMany 'message', payload.messages
+      for message in messages
+        message.set('user', @store.find('user', message.get('user')))
+        message.set('room', room)
+      room.get('messages').pushObjects messages
+  postMessage: (room, content) ->
+    postData = {content}
+    @post ['rooms', room.get('id'), 'messages'], {content}
+    .then (payload) =>
+      @pushMessage room, payload
+
+  # currently ignores the user argument; it must be called with the logged in user
+  # theoretically this should instantly create a local object
+  # and then try to push it. for science, you know
+  pushMessage: (room, payload) ->
+    user = @store.find('user', payload.message.user.id)
+    delete payload.message.user
+    message = @store.upsert 'message', payload.message
+    message.set 'user', user
+    room.get('messages').pushObject message

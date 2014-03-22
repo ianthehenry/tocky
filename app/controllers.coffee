@@ -13,19 +13,11 @@ Tocky.RoomController = Ember.ObjectController.extend meMixin,
   needs: ['authenticated']
   actions:
     sendMessage: ->
-      text = @get('nextMessageText')
-      @set('nextMessageText', "")
-      if text.trim().length == 0
+      content = @get('nextMessageContent')
+      @set('nextMessageContent', "")
+      if content.trim().length == 0
         return
-      message = @store.createRecord 'message',
-        content: text
-        time: new Date()
-        isUnread: false
-        user: @me()
-        room: @get('model')
-      @get('model.messages').then (messages) ->
-        messages.pushObject(message)
-      message.save()
+      Tocky.client.postMessage @get('model'), content
 
 Tocky.MessageController = Ember.ObjectController.extend
   needs: ['messages']

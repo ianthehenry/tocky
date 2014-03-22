@@ -6,6 +6,9 @@ exports.config =
     wrapper: false
   paths:
     public: 'build'
+  plugins:
+    coffeescript:
+      bare: false
   files:
     javascripts:
       joinTo:
@@ -16,8 +19,9 @@ exports.config =
           'bower_components/jquery/jquery.js'
           'bower_components/handlebars/handlebars.js'
           'bower_components/ember/ember.js'
-          'bower_components/ember-data/ember-data.js'
           'app/util.coffee'
+          'app/ems.coffee'
+          'app/models.coffee'
         ]
     templates:
         precompile: true

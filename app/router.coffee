@@ -1,3 +1,5 @@
+Tocky.client = new TockyClient()
+
 Tocky.Router.map ->
   @resource 'authenticated', { path: '/' }, ->
     @resource 'rooms', { path: '/rooms' }, ->
@@ -11,15 +13,14 @@ Tocky.AuthenticatedRoute = Ember.Route.extend
 
     if localStorage.session_id? and localStorage.user_id?
       applicationController.set 'savedTransition', null
-      TockyAdapter.headers =
-        'x-session-id': localStorage.session_id
+      Tocky.client.headers['x-session-id'] = localStorage.session_id
     else
       applicationController.set 'savedTransition', transition
       @transitionTo 'login'
   model: ->
-    @store.find 'user', localStorage.user_id
+    Tocky.client.find 'user', localStorage.user_id
   afterModel: (model) ->
-    @set 'wocket', new Wocket('http://localhost:3000', @store, model)
+    @set 'wocket', new Wocket('http://localhost:3000', model, Tocky.client)
   setupController: (controller) ->
     @_super(arguments...)
     controller.set 'wocket', @get('wocket')
@@ -34,7 +35,14 @@ Tocky.AuthenticatedRoute = Ember.Route.extend
       @transitionTo '/login'
 
 Tocky.RoomsRoute = Ember.Route.extend
-  model: -> @modelFor('authenticated').get('rooms')
+  model: ->
+    @modelFor('authenticated').get('rooms')
+
+Tocky.RoomRoute = Ember.Route.extend
+  model: ({room_id}) ->
+    Tocky.client.find 'room', room_id
+  afterModel: (room) ->
+    Tocky.client.loadMessages(room)
 
 Tocky.LoginRoute = Ember.Route.extend
   actions:
@@ -55,4 +63,3 @@ Tocky.LoginRoute = Ember.Route.extend
         alert "i'm sorry; something horrible has happened"
         debugger
       return
-
