@@ -1,6 +1,3 @@
-assert = (val, message) ->
-  console.assert(val, message)
-
 Schema = Ember.Object.extend
   init: ->
     @ModelClass = Ember.Object.extend
@@ -29,11 +26,12 @@ Store = Ember.Object.extend
     if model?
       @update model, data
     else
-      @create(typeName, data)
+      @create typeName, data
   update: (model, data) ->
-    assert(data.id == model.get('id'))
-    for own key, value of data
+    util.assert(data.id == model.get('id'))
+    for own key, value of data when key != 'id'
       model.set(key, value)
+    model
   create: (typeName, data) ->
     @_insert @schema.models[typeName].create data
 

@@ -6,10 +6,6 @@ fail = (message) ->
   new Ember.RSVP.Promise (resolve, reject) ->
     reject(message)
 
-assert = (val, message) ->
-  unless val
-    throw new Error(message)
-
 normalizeMessagesPayload = (payload) ->
   users = {}
   for message in payload.messages
