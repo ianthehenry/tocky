@@ -25,13 +25,16 @@ header
 #messages-container
   background-color: light-color
   .message
+    &:not(.repeat-sender)
+      .message-content
+        margin-top: message-spacing
     margin-top: message-spacing
     padding: 0 message-spacing
     .inline-user
       font-weight: bold
     .message-timestamp
       color: #888
-    &:not(.quiet):not(:first-of-type)
+    &:not(.repeat-sender):not(:first-of-type)
       padding-top: message-spacing
       border-top: solid 1px border-color
 

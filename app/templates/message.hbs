@@ -1,7 +1,7 @@
-{{#unless quiet}}
-  <div class="message-header">
-    <div class="message-timestamp">{{time}}</div>
-    {{inline-user user=user left=true}}
-  </div>
+{{#if showTimeStamp}}
+  <div class="message-timestamp">{{time}}</div>
+{{/if}}
+{{#unless isRepeatSender}}
+  {{inline-user user=user left=true}}
 {{/unless}}
 <div class="message-content"><span class="attribution">{{user.name}}: </span>{{{htmlContent}}}</div>
