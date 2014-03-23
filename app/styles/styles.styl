@@ -22,24 +22,26 @@ header
   background-color: mid-color
   border-bottom: solid 1px border-color
 
-#messages-container
-  background-color: light-color
+#messages-list
+  padding-bottom: message-spacing
+  background-color: mid-color
   .message
-    &:not(.repeat-sender)
-      .message-content
-        margin-top: message-spacing
     margin-top: message-spacing
     padding: 0 message-spacing
-    .inline-user
+    .gutter
+      margin-right: message-spacing
+    .alley.sender
       font-weight: bold
+      padding-bottom: message-spacing
+    .gutter.status.unread
+      background-color: cyan
     .message-timestamp
       color: #888
+      margin-left: message-spacing
     &:not(.repeat-sender):not(:first-of-type)
       padding-top: message-spacing
       border-top: solid 1px border-color
 
-#messages-list
-  background-color: mid-color
 
 #users
   background-color: dark-color

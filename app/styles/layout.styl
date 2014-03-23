@@ -2,6 +2,8 @@
   margin: 0
   padding: 0
 
+gutter-size = 20px
+
 html, body
   height: 100%
   -webkit-user-select: none
@@ -48,19 +50,20 @@ header
   flex: 1
   flex-direction: column
 
+#messages-list
+  flex: auto
+  overflow-y: scroll
   .message
+    .gutter
+      float: left
+      width: gutter-size
+      height: gutter-size
     .message-content
       -webkit-user-select: text
       .attribution
         font-size: 0
-    .message-header
-      -webkit-user-select: none
     .message-timestamp
       float: right
-
-#messages-list
-  flex: auto
-  overflow-y: scroll
 
 #message-input
   flex: none

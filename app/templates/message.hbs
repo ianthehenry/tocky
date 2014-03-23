@@ -2,6 +2,13 @@
   <div class="message-timestamp">{{time}}</div>
 {{/if}}
 {{#unless isRepeatSender}}
-  {{inline-user user=user left=true}}
+  <div class="gutter">
+    {{-avatar user=user}}
+  </div>
+  <div class="alley sender">
+    {{user.name}}
+  </div>
 {{/unless}}
-<div class="message-content"><span class="attribution">{{user.name}}: </span>{{{htmlContent}}}</div>
+<div class="gutter status unread">
+</div>
+<div class="alley message-content"><span class="attribution">{{user.name}}: </span>{{{htmlContent}}}</div>
