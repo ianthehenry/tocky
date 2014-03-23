@@ -44,16 +44,17 @@ Tocky.MessageController = Ember.ObjectController.extend
     moment(@get('model.time')).format('LT')
   date: util.prop 'model.time', ->
     moment(@get('model.time')).calendar()
-  isRepeatSender: util.getter ->
+  isNewSender: util.prop ->
     prevSender = @get('previousMessage.sender')
     currentSender = @get('model.sender')
-    return prevSender == currentSender
-  isRepeatTime: util.getter ->
-    moment(@get('model.time')).isSame(@get('previousMessage.time'), 'minute')
+    return prevSender != currentSender
+  isNewTime: util.prop ->
+    not moment(@get('model.time')).isSame(@get('previousMessage.time'), 'minute')
   showTimeStamp: Ember.computed.or('isNewSender', 'isNewTime')
-  isNewTime: Ember.computed.not('isRepeatTime')
-  isNewSender: Ember.computed.not('isRepeatSender')
-  quiet: Ember.computed.and('isRepeatSender', 'isRepeatTime')
+  showSender: util.prop ->
+    if @get('isNewSender')
+      return true
+    @get('model.time') - @get('previousMessage.time') > 5 * 60 * 1000
   previousMessage: util.prop ->
     # TODO: quadratic; doesn't update properly
     index = @parentController.indexOf(@get('model'))

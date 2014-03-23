@@ -14,7 +14,8 @@ serializers =
     hash: {}
   message: new EMS.Serializer 'message',
     id: {}
-    time: {}
+    time:
+      transform: (a) -> new Date(a)
     content: {}
     viewed:
       key: 'unread'

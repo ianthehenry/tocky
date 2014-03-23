@@ -31,15 +31,16 @@ header
       margin-top: message-spacing
     .gutter
       margin-right: message-spacing
-    .sender
+    .sender-name
       font-weight: bold
     .gutter.status.unread
       background-color: cyan
     .message-timestamp
       color: #888
       margin-left: message-spacing
-    &:not(.repeat-sender):not(:first-of-type)
+    &.showing-sender:not(:first-of-type)
       border-top: solid 1px border-color
+      margin-top: message-spacing
 
 
 #users

@@ -1,14 +1,14 @@
-{{#unless isRepeatSender}}
+{{#if showSender}}
   <div class="row">
     <div class="gutter">
       {{-avatar user=sender}}
     </div>
     <div class="alley">
       <div class="message-timestamp">{{date}}</div>
-      <span class="sender">{{sender.name}}</span>
+      <span class="sender-name">{{sender.name}}</span>
     </div>
   </div>
-{{/unless}}
+{{/if}}
 <div class="row">
   <div class="gutter status unread">
   </div>
