@@ -54,14 +54,16 @@ header
   flex: auto
   overflow-y: scroll
   .message
-    .gutter
-      float: left
-      width: gutter-size
-      height: gutter-size
+    .row
+      display: flex
+      .gutter
+        flex: none
+        width: gutter-size
+        height: gutter-size
+      .alley
+        flex: auto
     .message-content
       -webkit-user-select: text
-      .attribution
-        font-size: 0
     .message-timestamp
       float: right
 

@@ -1,14 +1,21 @@
-{{#if showTimeStamp}}
-  <div class="message-timestamp">{{time}}</div>
-{{/if}}
 {{#unless isRepeatSender}}
-  <div class="gutter">
-    {{-avatar user=sender}}
-  </div>
-  <div class="alley sender">
-    {{sender.name}}
+  <div class="row">
+    <div class="gutter">
+      {{-avatar user=sender}}
+    </div>
+    <div class="alley">
+      <div class="message-timestamp">{{date}}</div>
+      <span class="sender">{{sender.name}}</span>
+    </div>
   </div>
 {{/unless}}
-<div class="gutter status unread">
+<div class="row">
+  <div class="gutter status unread">
+  </div>
+  <div class="alley message-content">
+    {{#if showTimeStamp}}
+      <div class="message-timestamp">{{time}}</div>
+    {{/if}}
+    {{{htmlContent}}}
+  </div>
 </div>
-<div class="alley message-content"><span class="attribution">{{sender.name}}: </span>{{{htmlContent}}}</div>

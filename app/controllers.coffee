@@ -5,12 +5,12 @@ meMixin = Ember.Mixin.create
 
 moment.lang 'en',
   calendar:
-    lastDay: '[Yesterday at] LT',
-    sameDay: 'LT',
-    nextDay: '[Tomorrow at] LT',
-    lastWeek: '[Last] dddd [at] LT',
-    nextWeek: '[Next] dddd [at] LT',
-    sameElse: 'ddd, MMM D YYYY [at] LT'
+    lastDay: '[Yesterday]',
+    sameDay: '[]',
+    nextDay: '[Tomorrow]',
+    lastWeek: '[Last] dddd',
+    nextWeek: '[Next] dddd',
+    sameElse: 'ddd, MMM D YYYY'
 
 Tocky.ApplicationController = Ember.Controller.extend
   savedTransition: null
@@ -40,15 +40,16 @@ Tocky.MessageController = Ember.ObjectController.extend
     .replace(/&/g, '&amp;')
     .replace(/>/g, '&gt;')
     .replace(/</g, '&lt;')
-  formatTime: (jsDate) -> moment(jsDate).calendar()
   time: util.prop 'model.time', ->
-    @formatTime(@get('model.time'))
+    moment(@get('model.time')).format('LT')
+  date: util.prop 'model.time', ->
+    moment(@get('model.time')).calendar()
   isRepeatSender: util.getter ->
     prevSender = @get('previousMessage.sender')
     currentSender = @get('model.sender')
     return prevSender == currentSender
   isRepeatTime: util.getter ->
-    @formatTime(@get('model.time')) == @formatTime(@get('previousMessage.time'))
+    moment(@get('model.time')).isSame(@get('previousMessage.time'), 'minute')
   showTimeStamp: Ember.computed.or('isNewSender', 'isNewTime')
   isNewTime: Ember.computed.not('isRepeatTime')
   isNewSender: Ember.computed.not('isRepeatSender')
