@@ -3,6 +3,17 @@ meMixin = Ember.Mixin.create
     me = @get('controllers.authenticated').get('model')
     if key then me.get(key) else me
 
+
+
+moment.lang 'en',
+  calendar:
+    lastDay: '[Yesterday at] LT',
+    sameDay: 'LT',
+    nextDay: '[Tomorrow at] LT',
+    lastWeek: '[Last] dddd [at] LT',
+    nextWeek: '[Next] dddd [at] LT',
+    sameElse: 'ddd, MMM D YYYY [at] LT'
+
 Tocky.ApplicationController = Ember.Controller.extend
   savedTransition: null
 
@@ -29,8 +40,7 @@ Tocky.MessageController = Ember.ObjectController.extend
     .replace(/&/g, '&amp;')
     .replace(/>/g, '&gt;')
     .replace(/</g, '&lt;')
-  formatTime: (jsDate) ->
-    moment(jsDate).format('h:mm A')
+  formatTime: (jsDate) -> moment(jsDate).calendar()
   time: util.prop 'model.time', ->
     @formatTime(@get('model.time'))
   isRepeatSender: util.getter ->
