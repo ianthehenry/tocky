@@ -9,8 +9,33 @@ Schema = Ember.Object.extend
     @types[typeName] = @ModelClass.extend(attributes ? {})
     @types[typeName].typeName = typeName
 
+Serializer = Ember.Object.extend
+  init: (@typeName, @attrs={}) ->
+  map: (key, mapping) ->
+    @attrs[key] = mapping
+  loadInto: (model, data) ->
+    prev_id = model.get('id')
+    for own rawKey, rawValue of data
+      mapping = @attrs[rawKey]
+      if not mapping?
+        continue
+      @mapAttr model, rawKey, rawValue, mapping
+    util.assert (!prev_id? or model.get('id') == prev_id), "cannot change id of a model!"
+    return
+  mapAttr: (model, rawKey, rawValue, mapping) ->
+    key = mapping.key ? rawKey
+    value = @applyTransform(mapping.transform, rawValue, model.store)
+    model.set key, value
+  applyTransform: (transform, rawValue, store) ->
+    if not transform?
+      return rawValue
+    if transform instanceof Serializer
+      store.upsert transform.typeName, rawValue, transform
+    else
+      transform rawValue
+
 Store = Ember.Object.extend
-  init: (@schema) ->
+  init: (@schema, @serializers) ->
     @reset()
   reset: ->
     @_cache = {}
@@ -20,20 +45,26 @@ Store = Ember.Object.extend
   find: (typeName, id) ->
     @_cache[typeName][id]
   _insert: (model) ->
+    util.assert model.get('id'), "cannot insert a model with no id"
     @_cache[model.constructor.typeName][model.get('id')] = model
-  upsert: (typeName, data) ->
+  upsert: (typeName, data, serializer=@serializers[typeName]) ->
+    util.assert data.id?, "cannot upsert data with no id"
     model = @find(typeName, data.id)
     if model?
-      @update model, data
+      @update model, data, serializer
     else
-      @create typeName, data
-  update: (model, data) ->
+      @create typeName, data, serializer
+  update: (model, data, serializer=@serializers[model.constructor.typeName]) ->
     util.assert(data.id == model.get('id'))
-    for own key, value of data when key != 'id'
-      model.set(key, value)
+    serializer.loadInto(model, data)
     model
-  create: (typeName, data) ->
-    @_insert @schema.types[typeName].create data
+  create: (typeName, data, serializer=@serializers[typeName]) ->
+    model = @schema.types[typeName].create()
+    model.store = this
+    serializer.loadInto(model, data)
+    if model.get('id')?
+      @_insert model
+    model
 
 SortedSet = Ember.ArrayProxy.extend
   init: (@collection, @sortDescriptors) ->
@@ -48,6 +79,7 @@ SortedSet = Ember.ArrayProxy.extend
             @_insert obj
         if removing?
           @get('content').removeObjects removing
+        return
     @_super(arguments...)
   _insert: (obj) ->
     @get('content').replace @_indexToInsert(obj), 0, [obj]
@@ -77,4 +109,4 @@ SortedSet = Ember.ArrayProxy.extend
     else if a == b then 0
     else 1
 
-window.EMS = {Schema, Store, SortedSet}
+window.EMS = {Schema, Store, SortedSet, Serializer}

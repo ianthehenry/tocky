@@ -3,12 +3,12 @@
 {{/if}}
 {{#unless isRepeatSender}}
   <div class="gutter">
-    {{-avatar user=user}}
+    {{-avatar user=sender}}
   </div>
   <div class="alley sender">
-    {{user.name}}
+    {{sender.name}}
   </div>
 {{/unless}}
 <div class="gutter status unread">
 </div>
-<div class="alley message-content"><span class="attribution">{{user.name}}: </span>{{{htmlContent}}}</div>
+<div class="alley message-content"><span class="attribution">{{sender.name}}: </span>{{{htmlContent}}}</div>

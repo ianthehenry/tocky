@@ -44,8 +44,8 @@ Tocky.MessageController = Ember.ObjectController.extend
   time: util.prop 'model.time', ->
     @formatTime(@get('model.time'))
   isRepeatSender: util.getter ->
-    prevSender = @get('previousMessage.user')
-    currentSender = @get('model.user')
+    prevSender = @get('previousMessage.sender')
+    currentSender = @get('model.sender')
     return prevSender == currentSender
   isRepeatTime: util.getter ->
     @formatTime(@get('model.time')) == @formatTime(@get('previousMessage.time'))
