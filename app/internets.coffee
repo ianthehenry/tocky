@@ -53,7 +53,7 @@ window.TockyClient = Ember.Object.extend
       for message in messages
         message.set('user', @store.find('user', message.get('user')))
         message.set('room', room)
-      room.get('messages').pushObjects messages
+      room.get('messages').addObjects messages
   postMessage: (room, content) ->
     postData = {content}
     @post ['rooms', room.get('id'), 'messages'], {content}
@@ -68,4 +68,4 @@ window.TockyClient = Ember.Object.extend
     delete payload.message.user
     message = @store.upsert 'message', payload.message
     message.set 'user', user
-    room.get('messages').pushObject message
+    room.get('messages').addObject message

@@ -4,5 +4,5 @@ TockySchema.registerModel 'user',
     @set 'rooms', new Ember.Set()
 TockySchema.registerModel 'room',
   init: ->
-    @set 'messages', []
+    @set 'messages', new Ember.Set()
 TockySchema.registerModel 'message'

@@ -11,6 +11,8 @@ Tocky.AuthenticatedController = Ember.ObjectController.extend
 
 Tocky.RoomController = Ember.ObjectController.extend meMixin,
   needs: ['authenticated']
+  messages: util.prop 'model', ->
+    new EMS.SortedSet @get('model.messages'), ['+time']
   actions:
     sendMessage: ->
       content = @get('nextMessageContent')
