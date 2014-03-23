@@ -4,17 +4,17 @@ Schema = Ember.Object.extend
       schema: this
       createRecord: (data) ->
         @create(data)
-    @models = {}
-  registerModel: (typeName, attributes) ->
-    @models[typeName] = @ModelClass.extend(attributes ? {})
-    @models[typeName].typeName = typeName
+    @types = {}
+  registerType: (typeName, attributes) ->
+    @types[typeName] = @ModelClass.extend(attributes ? {})
+    @types[typeName].typeName = typeName
 
 Store = Ember.Object.extend
   init: (@schema) ->
     @reset()
   reset: ->
     @_cache = {}
-    for typeName, type of @schema.models
+    for typeName, type of @schema.types
       @_cache[typeName] = {}
     return
   find: (typeName, id) ->
@@ -33,7 +33,7 @@ Store = Ember.Object.extend
       model.set(key, value)
     model
   create: (typeName, data) ->
-    @_insert @schema.models[typeName].create data
+    @_insert @schema.types[typeName].create data
 
 SortedSet = Ember.ArrayProxy.extend
   init: (@collection, @sortDescriptors) ->

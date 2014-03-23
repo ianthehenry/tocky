@@ -1,9 +1,9 @@
 window.TockySchema = EMS.Schema.create()
-TockySchema.registerModel 'user',
+TockySchema.registerType 'user',
   init: ->
     @set 'rooms', new Ember.Set()
-TockySchema.registerModel 'room',
+TockySchema.registerType 'room',
   init: ->
     @set 'users', new Ember.Set()
     @set 'messages', new Ember.Set()
-TockySchema.registerModel 'message'
+TockySchema.registerType 'message'
