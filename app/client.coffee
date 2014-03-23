@@ -49,6 +49,11 @@ window.TockyClient = Ember.Object.extend
         message.set('user', @store.find('user', message.get('user')))
         message.set('room', room)
       room.get('messages').addObjects messages
+  loadUsers: (room) ->
+    @ajax 'GET', ['rooms', room.get('id'), 'usership']
+    .then (payload) =>
+      users = @pushMany 'user', payload.users
+      room.get('users').addObjects users
   messagesSyncing: 0
   postMessage: (room, content) ->
     postData = {content}

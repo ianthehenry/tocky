@@ -36,12 +36,13 @@ Tocky.AuthenticatedRoute = Ember.Route.extend
 
 Tocky.RoomsRoute = Ember.Route.extend
   model: ->
-    new EMS.SortedSet @modelFor('authenticated').get('rooms'), ['+name']
+    new EMS.SortedSet @modelFor('authenticated').get('rooms'), [{key: 'name', asc: true}]
 
 Tocky.RoomRoute = Ember.Route.extend
   model: ({room_id}) ->
     Tocky.client.find 'room', room_id
   afterModel: (room) ->
+    Tocky.client.loadUsers(room)
     Tocky.client.loadMessages(room)
 
 Tocky.LoginRoute = Ember.Route.extend

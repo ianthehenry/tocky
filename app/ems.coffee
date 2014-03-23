@@ -66,14 +66,11 @@ SortedSet = Ember.ArrayProxy.extend
     else
       end
   _compare: (a, b) ->
-    for descriptor in @sortDescriptors
-      util.assert descriptor[0] in ['+', '-'], "Invalid descriptor #{descriptor}!"
-      ascending = descriptor[0] == '+'
-      key = descriptor[1...]
+    for {asc, key} in @sortDescriptors
       result = @_simpleCompare(a.get(key), b.get(key))
       if result == 0
         continue
-      return result * (if ascending then 1 else -1)
+      return result * (if asc then 1 else -1)
     return 0
   _simpleCompare: (a, b) ->
     if a < b then -1

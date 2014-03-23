@@ -3,8 +3,6 @@ meMixin = Ember.Mixin.create
     me = @get('controllers.authenticated').get('model')
     if key then me.get(key) else me
 
-
-
 moment.lang 'en',
   calendar:
     lastDay: '[Yesterday at] LT',
@@ -23,7 +21,9 @@ Tocky.AuthenticatedController = Ember.ObjectController.extend
 Tocky.RoomController = Ember.ObjectController.extend meMixin,
   needs: ['authenticated']
   messages: util.prop 'model', ->
-    new EMS.SortedSet @get('model.messages'), ['+time']
+    new EMS.SortedSet @get('model.messages'), [{key: 'time', asc: true}]
+  users: util.prop 'model', ->
+    new EMS.SortedSet @get('model.users'), [{key: 'name', asc: true}]
   actions:
     sendMessage: ->
       content = @get('nextMessageContent')
