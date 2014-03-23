@@ -24,11 +24,6 @@ window.TockyClient = Ember.Object.extend
       headers: @headers
       data: params
 
-  get: ->
-    @ajax 'GET', arguments...
-  post: ->
-    @ajax 'POST', arguments...
-
   find: (typeName, id, cached=false) ->
     model = @store.find typeName, id
     if model?
@@ -36,7 +31,7 @@ window.TockyClient = Ember.Object.extend
     else if cached
       return fail "#{typeName}##{id} is not cached"
 
-    @get [pluralize(typeName), id]
+    @ajax 'GET', [pluralize(typeName), id]
     .then (payload) =>
       @store.create typeName, payload[typeName]
 
@@ -45,7 +40,7 @@ window.TockyClient = Ember.Object.extend
       @store.upsert typeName, data
 
   loadMessages: (room) ->
-    @get ['rooms', room.get('id'), 'messages'], {limit: 30}
+    @ajax 'GET', ['rooms', room.get('id'), 'messages'], {limit: 30}
     .then (payload) =>
       normalizeMessagesPayload(payload)
       @pushMany 'user', payload.users
@@ -54,11 +49,17 @@ window.TockyClient = Ember.Object.extend
         message.set('user', @store.find('user', message.get('user')))
         message.set('room', room)
       room.get('messages').addObjects messages
+  messagesSyncing: 0
   postMessage: (room, content) ->
     postData = {content}
-    @post ['rooms', room.get('id'), 'messages'], {content}
+    @incrementProperty('messagesSyncing')
+    @ajax 'POST', ['rooms', room.get('id'), 'messages'], {content}
     .then (payload) =>
+      @decrementProperty('messagesSyncing')
       @pushMessage room, payload
+    .fail (error) =>
+      @decrementProperty('messagesSyncing')
+      debugger
 
   # currently ignores the user argument; it must be called with the logged in user
   # theoretically this should instantly create a local object

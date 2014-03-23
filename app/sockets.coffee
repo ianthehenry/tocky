@@ -1,5 +1,7 @@
 window.Wocket = Ember.Object.extend
-  init: (host, @me, @client) ->
+  init: (host, @me, client) ->
+    @queuedMessages = []
+    @set 'client', client
     @connection = io.connect host
     @set('state', 'connecting')
     hasConnectedBefore = false
@@ -19,24 +21,25 @@ window.Wocket = Ember.Object.extend
       @handlers[event]?.apply(this, args)
 
     @_super(arguments...)
+  flushIfDone: util.observes 'client.messagesSyncing', ->
+    if @get('client.messagesSyncing') > 0
+      return
+    for args in @queuedMessages
+      @handlers.chat.apply(this, args)
+    @queuedMessages = []
   handlers:
     logOn: (roomDatas, state) ->
-      rooms = @client.pushMany('room', roomDatas)
+      rooms = @get('client').pushMany('room', roomDatas)
       @me.get('rooms').addObjects rooms
       return
     chat: (messageData, roomData) ->
-      # we will probably receive a chat message before the POST response
-      # has come back when we create a message.
-      # this is gross and annoying, so we suspend operations until
-      # the client is not creating any messages (because the only
-      # way to tie it together is with the ID)
-      # our current way of doing this is...hacky, to say the least
-      if messageData.user.id == @me.get('id')
-        console.log 'ignoring a chat that we made...possibly in another window'
+      if @get('client.messagesSyncing') > 0
+        @queuedMessages.push arguments
         return
-      @client.find 'room', roomData.id, true
+
+      @get('client').find 'room', roomData.id, true
       .then (room) =>
-        @client.pushMessage room, {message: messageData}
+        @get('client').pushMessage room, {message: messageData}
       .catch (message) =>
         debugger
       return
