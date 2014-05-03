@@ -30,11 +30,23 @@ header
     .row
       margin-top: message-spacing
     .gutter
+      position: relative
       margin-right: message-spacing
     .sender-name
       font-weight: bold
-    .gutter.status.unread
-      background-color: cyan
+    .status
+      width: 10px
+      height: 10px
+      border-radius: 5px
+      margin: 0 auto
+      position: absolute
+      top: 50%
+      left: 50%
+      margin-left: -5px
+      margin-top: -5px
+      background-color: grey
+    &.unread .status
+      background-color: blue
     .message-timestamp
       color: #888
       margin-left: message-spacing

@@ -50,7 +50,7 @@ Tocky.MessagesView = Ember.View.extend
 
 Tocky.MessageView = Ember.View.extend
   classNames: ['message']
-  classNameBindings: ['controller.showSender:showing-sender']
+  classNameBindings: ['controller.showSender:showing-sender', 'controller.unread:unread']
   templateName: 'message'
   didInsertElement: ->
     @get('parentView').didInsertChild()
