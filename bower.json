@@ -3,7 +3,7 @@
   "dependencies": {
     "ember": "=1.5.0-beta.2",
     "socket.io-client": "~0.9.16",
-    "momentjs": "~2.5.1"
+    "momentjs": "=2.5.1"
   },
   "overrides": {
     "socket.io-client": {
