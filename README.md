@@ -1,9 +1,3 @@
-You need to `npm install` before you do anything.
+An experiemental chat client for a server that no longer exists. Defunct, but historically a little bit interesting.
 
-If you don't have [broccoli](https://github.com/joliss/broccoli) already, `npm install -g broccoli-cli` first.
-
-To start Tocky:
-
-    $ broccoli serve & npm start
-
-Or, you know, run those two in separate terminals so you can easily restart them.
+Does it work? Maybe. There are no build instructions, though. This is an old repo that I found on my hard drive.
