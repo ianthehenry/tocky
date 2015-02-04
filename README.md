@@ -9,7 +9,7 @@ But it was a testing bed for a couple of technologies, namely:
 
 This was developed against Ember 1.5.0-beta.2 and node-webkit 0.8.5. Ember 1.9.1 is out now and node-webkit rebranded to nw.js and is on 0.11.5. So things might be better. I was using very new technologies.
 
-Below, some brief thoughts:
+## Thoughts
 
 I like the idea of node-webkit. Debugging tools weren't that horrible. I remember it being so difficult to upgrade to 0.9 that I eventually gave up. The changes weren't well documented, and the installation itself is cumbersome. It's something I would consider using again, given the right moivation, but I'll probably take a look at atom-shell first.
 
@@ -26,5 +26,13 @@ In practice this unpleasant for a few reasons:
     - This is not a core part of Ember, but it was one of the pieces that attracted me to the project in the first place. Fortunately, it was replaceable, but I spent far longer than I would care to admit struggling to get it working.
     - At the time there were lots of open source alternatives, all of which worked for exactly one payload type. I ended up writing [my own](app/ems.coffee) which, of course, only works for this project.
     - I see that at time of writing they're up from 1.0.0-beta.7 all the way to 1.0.0-beta.15-canary.
+- Ember's rendering was very slow, and as a result the whole application felt sluggish. I don't know if that's still the case.
 
 Remember that all of these complaints apply to Ember circa March 2014. It's come a long way, and I hope it's better now.
+
+## Features
+
+- websocket-based message streaming
+- unread message indicators
+- multiple room selection
+- login/logout with authenticated state handled properly (it would redirect to the right place after you logged in)
