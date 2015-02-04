@@ -17,6 +17,10 @@ Tocky.ApplicationController = Ember.Controller.extend
 
 Tocky.AuthenticatedController = Ember.ObjectController.extend
   socketState: Ember.computed.alias('wocket.state')
+  rooms: util.readOnly ->
+    new EMS.SortedSet @get('model').get('rooms'), [{key: 'name', asc: true}]
+  conversations: util.readOnly ->
+    new EMS.SortedSet @get('model').get('conversations'), [{key: 'name', asc: true}]
 
 Tocky.RoomController = Ember.ObjectController.extend meMixin,
   needs: ['authenticated']

@@ -4,6 +4,28 @@
   <button {{action "logout"}}>log out</button>
 </header>
 
-<div id="main">
-  {{outlet}}
+<div id="everything">
+  <div id="sidebar">
+    Conversations
+    <div id="conversations">
+      {{#each conversations}}
+        {{#link-to 'conversation' . class="room"}}
+          <span class="room-name">{{name}}</span>
+          <span class="unread-count">0</span>
+        {{/link-to}}
+      {{/each}}
+    </div>
+    Rooms
+    <div id="rooms">
+      {{#each rooms}}
+        {{#link-to 'room' . class="room"}}
+          <span class="room-name">{{name}}</span>
+          <span class="unread-count">0</span>
+        {{/link-to}}
+      {{/each}}
+    </div>
+  </div>
+  <div id="content">
+    {{outlet}}
+  </div>
 </div>

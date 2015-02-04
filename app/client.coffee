@@ -51,14 +51,15 @@ window.TockyClient = Ember.Object.extend
     for data in datas
       @store.upsert typeName, data
 
-  loadMessages: (room) ->
-    @ajax 'GET', ['rooms', room.get('id'), 'messages'], {limit: 30}
+  loadMessages: (target) ->
+    key = 'room'
+    @ajax 'GET', ["#{key}s", target.get('id'), 'messages'], {limit: 30}
     .then (payload) =>
       messages = @pushMany 'message', payload.messages
       for message in messages
-        message.set('room', room)
-      room.get('messages').addObjects messages
-  loadUsers: (room) ->
+        message.set(key, target)
+      target.get('messages').addObjects messages
+  loadUserships: (room) ->
     @ajax 'GET', ['rooms', room.get('id'), 'usership']
     .then (payload) =>
       users = @pushMany 'user', payload.users

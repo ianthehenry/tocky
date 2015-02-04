@@ -4,6 +4,7 @@ Tocky.Router.map ->
   @resource 'authenticated', { path: '/' }, ->
     @resource 'rooms', { path: '/rooms' }, ->
       @resource 'room', { path: '/:room_id' }
+    @resource 'conversation', { path: 'conversation/:user_id' }
 
   @resource 'login'
 
@@ -34,16 +35,18 @@ Tocky.AuthenticatedRoute = Ember.Route.extend
       delete localStorage.user_id
       @transitionTo '/login'
 
-Tocky.RoomsRoute = Ember.Route.extend
-  model: ->
-    new EMS.SortedSet @modelFor('authenticated').get('rooms'), [{key: 'name', asc: true}]
-
 Tocky.RoomRoute = Ember.Route.extend
   model: ({room_id}) ->
     Tocky.client.find 'room', room_id
   afterModel: (room) ->
-    Tocky.client.loadUsers(room)
+    Tocky.client.loadUserships(room)
     Tocky.client.loadMessages(room)
+
+Tocky.ConversationRoute = Ember.Route.extend
+  model: ({user_id}) ->
+    Tocky.client.find 'user', user_id
+  afterModel: (user) ->
+    Tocky.client.loadMessages(user)
 
 Tocky.LoginRoute = Ember.Route.extend
   actions:

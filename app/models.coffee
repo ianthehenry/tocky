@@ -2,6 +2,7 @@ window.TockySchema = EMS.Schema.create()
 TockySchema.registerType 'user',
   init: ->
     @set 'rooms', new Ember.Set()
+    @set 'conversations', new Ember.Set()
 TockySchema.registerType 'room',
   init: ->
     @set 'users', new Ember.Set()
